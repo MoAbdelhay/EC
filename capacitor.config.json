@@ -1,0 +1,26 @@
+{
+  "appId": "com.benchmarkguides.calculator",
+  "appName": "Engineer's Calculator",
+  "webDir": "www",
+  "backgroundColor": "#EDEFEA",
+  "android": {
+    "backgroundColor": "#EDEFEA"
+  },
+  "ios": {
+    "backgroundColor": "#EDEFEA",
+    "contentInset": "never"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 700,
+      "launchAutoHide": true,
+      "backgroundColor": "#16212B",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "LIGHT",
+      "backgroundColor": "#EDEFEA",
+      "overlaysWebView": false
+    }
+  }
+}
