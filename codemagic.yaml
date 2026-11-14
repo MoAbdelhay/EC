@@ -1,0 +1,74 @@
+# Codemagic: build, sign and upload the iOS app to App Store Connect (TestFlight).
+# One-time setup is in README.md → "iOS release with Codemagic".
+#
+# Start a build from Codemagic (Start new build → "iOS App Store"), or push a tag such as v1.0.1:
+#   git tag v1.0.1 && git push origin v1.0.1
+#
+# Version numbers:
+#   - App Store version (CFBundleShortVersionString) = "version" in package.json. Bump it for each release.
+#   - Build number (CFBundleVersion) = build date and time (YYMMDDHHMM), so every upload is higher than the last.
+
+workflows:
+  ios-app-store:
+    name: iOS App Store
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+    integrations:
+      # The name you give the App Store Connect API key in Codemagic → Integrations → Developer Portal.
+      app_store_connect: BG App Store Connect
+
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.benchmarkguides.calculator
+      node: 22
+      xcode: latest
+      vars:
+        XCODE_PROJECT: ios/App/App.xcodeproj
+        XCODE_SCHEME: App
+
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "v*"
+          include: true
+
+    scripts:
+      - name: Install dependencies
+        script: npm ci
+
+      - name: Build the web bundle (src/calculator.html)
+        script: npm run build:web
+
+      - name: Copy it into the iOS project
+        script: npx cap sync ios
+
+      - name: Set version and build number
+        script: |
+          VERSION=$(node -p "require('./package.json').version")
+          BUILD=$(date -u +%y%m%d%H%M)
+          sed -i '' -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = $VERSION;/g; s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = $BUILD;/g" "$XCODE_PROJECT/project.pbxproj"
+          echo "Version $VERSION, build $BUILD"
+
+      - name: Apply App Store signing profiles
+        script: xcode-project use-profiles
+
+      - name: Build the .ipa
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      app_store_connect:
+        auth: integration
+        # Upload to TestFlight for testing. Submitting for App Store review stays a manual step
+        # in App Store Connect, after you check the build on a real iPhone.
+        submit_to_testflight: true
+        submit_to_app_store: false
