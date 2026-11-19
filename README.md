@@ -1,6 +1,6 @@
 # Engineer's Calculator · حاسبة المهندس — Android and iOS app
 
-The Benchmark Guides calculator (53 calculators, Arabic and English) packaged as a native app with
+The Benchmark Guides calculator (131 calculators in 24 disciplines, Arabic and English) packaged as a native app with
 [Capacitor](https://capacitorjs.com). It runs fully offline: the page and its fonts are bundled inside the app.
 
 - App ID: `com.benchmarkguides.calculator`
