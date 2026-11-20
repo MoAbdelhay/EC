@@ -16,7 +16,7 @@ workflows:
 
     integrations:
       # The name you give the App Store Connect API key in Codemagic → Integrations → Developer Portal.
-      app_store_connect: BG App Store Connect
+      app_store_connect: gnzub_asc
 
     environment:
       ios_signing:

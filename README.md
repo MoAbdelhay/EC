@@ -92,9 +92,9 @@ App Store Connect API → Team Keys → + . Name it "Codemagic", access **App Ma
    minutes a month on Mac mini M2).
 2. Add application → GitHub → `MoAbdelhay/EC` → project type "Other" → it finds `codemagic.yaml`.
 3. Team / user settings → Integrations → **Developer Portal** → Connect → name it exactly
-   **`BG App Store Connect`** (the name used in `codemagic.yaml`), paste the Issuer ID and Key ID, upload the `.p8`.
+   **`gnzub_asc`** (the name used in `codemagic.yaml`), paste the Issuer ID and Key ID, upload the `.p8`.
 4. Team / user settings → **Code signing identities** → iOS certificates → Generate certificate →
-   type **Apple Distribution**, using the `BG App Store Connect` key. Then → iOS provisioning profiles →
+   type **Apple Distribution**, using the `gnzub_asc` key. Then → iOS provisioning profiles →
    Fetch profiles → pick the **App Store** profile for `com.benchmarkguides.calculator` (create it if listed as missing).
 
 **6. Build.** In Codemagic: Start new build → branch `main` → workflow **iOS App Store**. Or push a tag:
