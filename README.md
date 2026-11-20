@@ -109,7 +109,7 @@ app on your iPhone and check it.
 
 **7. Submit for review** (in App Store Connect, each release):
 - Screenshots: 6.9" iPhone (1320 × 2868) and, because the app also runs on iPad, 13" iPad (2064 × 2752).
-  Ready-made sets and all listing text (EN and AR) are in `MEP Calculatorpppp-store\` on the Drive.
+  Ready-made sets and all listing text (EN and AR) are in `MEP Calculator/app/app-store/` on the Drive.
 - Description, keywords, support URL (e.g. `https://benchmarkguides.com`) and privacy policy URL
   (your store's privacy page).
 - App Privacy → **Data Not Collected** (the app stores inputs only on the device).
